@@ -46,6 +46,8 @@ Vue.component('product', {
              <p>{{ review.name }}</p>
              <p>{{ review.rating }}</p>
              <p>{{ review.review }}</p>
+             <p v-if="review.recommend === 'Yes'">{{ review.name }} recommends this product</p>
+             <p v-else>{{ review.name }} does not recommend this product</p>
            </li>
          </ul>
        </div>
@@ -166,6 +168,7 @@ Vue.component('product-review', {
   methods: {
     onSubmit() {
       if(this.name && this.review && this.rating && this.recommend) {
+        this.errors = []
         let productReview = {
           name: this.name,
           review: this.review,
@@ -178,6 +181,7 @@ Vue.component('product-review', {
         this.rating = null
         this.recommend = null
       } else {
+        this.errors = []
         if(!this.name) this.errors.push("Name required.")
         if(!this.review) this.errors.push("Review required.")
         if(!this.rating) this.errors.push("Rating required.")
